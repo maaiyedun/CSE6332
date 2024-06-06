@@ -71,6 +71,78 @@ const quiz1data=[
     }
 ];
 
+const quiz1data2=[
+    {
+        name:"apple",
+        cost:"19",
+        pic:"https://maaiyedun.blob.core.windows.net/assignment1/apple.jpg?sp=r&st=2024-06-06T20:43:42Z&se=2024-06-07T04:43:42Z&spr=https&sv=2022-11-02&sr=b&sig=VgTwS%2Fp51Feb%2Fc9y%2FgX5j4%2FF9yL0tyWsLr9Zwaj1Mss%3D",
+        descript:"apples are good"
+
+    },
+    {
+        name:"berry",
+        cost:"20",
+        pic:"",
+        descript:"berries are great"
+
+    },
+    {
+        name:"carl,,",
+        cost:"",
+        pic:"https://maaiyedun.blob.core.windows.net/assignment1/carl.jpg?sp=r&st=2024-06-06T20:44:32Z&se=2024-06-07T04:44:32Z&spr=https&sv=2022-11-02&sr=b&sig=voTKxlMz%2B9bi6xFIo5wrVCSVTqXKhuKATwM%2F2YKb3sk%3D",
+        descript:"carl is also a cat"
+
+    },
+    {
+        name:"dave",
+        cost:"0",
+        pic:"https://maaiyedun.blob.core.windows.net/assignment1/dave2.jpg?sp=r&st=2024-06-06T20:53:07Z&se=2024-06-07T04:53:07Z&spr=https&sv=2022-11-02&sr=b&sig=PAIf0qzRTKKRgRhmPSQh%2FjkMGO9whoh8kkd6qwaqoOo%3D",
+        descript:"who is Dave"
+
+    },
+    {
+        name:"eve",
+        cost:"95",
+        pic:"",
+        descript:"eve is a computer"
+
+    },
+    {
+        name:"fig",
+        cost:"42",
+        pic:"",
+        descript:"figs are cheap"
+
+    }
+    ,    {
+        name:"grape",
+        cost:"",
+        pic:"",
+        descript:"grapes red or green"
+
+    }
+    ,    {
+        name:"helya",
+        cost:"1000",
+        pic:"",
+        descript:"helya is very smart"
+
+    }
+    ,    {
+        name:"imtiaz",
+        cost:"600",
+        pic:"",
+        descript:""
+
+    }
+    ,    {
+        name:"sinong",
+        cost:"999",
+        pic:"https://maaiyedun.blob.core.windows.net/assignment1/sinong.jpg?sp=r&st=2024-06-06T20:46:39Z&se=2024-06-07T04:46:39Z&spr=https&sv=2022-11-02&sr=b&sig=a1fBXdcYngzP1mBRkNAtsmyclYXOBpqMUGS1kdVv0E8%3D",
+        descript:"sinong is also very smart"
+
+    }
+];
 
 const peopledata = [
     {name:"Dhruvi",
@@ -343,7 +415,7 @@ const data = [
             const name = document.getElementById("nameupdate").value;
             const nname = document.getElementById("nname").value;
             const ndescript = document.getElementById("ndescript").value;
-            const item = data.find(item => item.name === name);
+            const item = quiz1data.find(item => item.name === name);
             if (item) {
                 item.name = nname;
                 item.descript = ndescript;
@@ -353,6 +425,9 @@ const data = [
             }
         }
 
+        function datareset(){
+            quiz1data === quiz1data2; 
+        }
 
 
 
