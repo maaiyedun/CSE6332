@@ -28,6 +28,28 @@
     <h1>Michael Aiyedun 345849</h1>
     <img src="https://maaiyedun.blob.core.windows.net/assignment1/dan.jpg?sp=r&st=2024-06-05T22:12:06Z&se=2024-06-06T06:12:06Z&spr=https&sv=2022-11-02&sr=b&sig=SH0gCBAelSJGredOfecnnJSeCJ67zOSYli8ix2yMlxo%3D" alt="literallyme">
 
+    <div>
+      <label for="room">Enter Room Number to search for:</label>
+      <input type="text" id="room" name="room">
+      <button onclick="lookupRoom()">Lookup</button>
+  </div>
+  <div>
+      <label for="teln">Enter Telephone Number to search for:</label>
+      <input type="text" id="teln" name="teln">
+      <button onclick="lookupTeln()">Lookup</button>
+  </div>
+  <div>
+      <label for="telnUpdate">Enter Telephone Number to Update:</label>
+      <input type="text" id="telnUpdate" name="telnUpdate">
+      <label for="newDescript">New Description:</label>
+      <input type="text" id="newDescript" name="newDescript">
+      <button onclick="updateDescription()">Update</button>
+  </div>
+  <div class="result" id="result"></div>
+
+  <script src="script.js"></script>
+
+
 
     <h2>CSE Assignemnt 1, Quiz 0</h2>
     <h3>People DataSheet</h3>
