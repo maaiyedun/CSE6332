@@ -1,3 +1,107 @@
+const peopledata = [
+    {name:"Dhruvi",
+     state:"TX",
+     salary:"99099",
+     grade:"100",
+     room:"550",
+     telnum:"1000010",
+     pic:"https://maaiyedun.blob.core.windows.net/assignment1/dhru.jpg?sp=r&st=2024-06-06T19:03:23Z&se=2024-06-07T03:03:23Z&spr=https&sv=2022-11-02&sr=b&sig=zJdG2aGTNmxtVyyAIEAmN36FJEcH5kbW8PJMV1uWEcg%3D",
+     keyword:"Dhruvi is nice"   
+    },
+
+    {name:"Chuck",
+        state:"TX",
+        salary:"1000",
+        grade:"98",
+        room:"420",
+        telnum:"",
+        pic:"https://maaiyedun.blob.core.windows.net/assignment1/chuck.jpg?sp=r&st=2024-06-06T19:19:47Z&se=2024-06-07T03:19:47Z&spr=https&sv=2022-11-02&sr=b&sig=OR5G5MrKRzVA%2BPrlcL2PmwOzwd0c%2BAqx15MX7GekjUE%3D",
+        keyword:"Chuck is amazing"   
+       },
+       {name:"Meena",
+        state:"TX",
+        salary:"125000",
+        grade:"99",
+        room:"",
+        telnum:"",
+        pic:"",
+        keyword:"Meena is outa here"   
+       },
+       {name:"Dave",
+        state:"NN",
+        salary:"20",
+        grade:"40",
+        room:"525",
+        telnum:"0",
+        pic:"https://maaiyedun.blob.core.windows.net/assignment1/dave.jpg?sp=r&st=2024-06-06T19:18:02Z&se=2024-06-07T03:18:02Z&spr=https&sv=2022-11-02&sr=b&sig=k3m1yjBTBk0NEKpj7Y3SNUk8ABRMv9am5mAZLuqc8OM%3D",
+        keyword:"who is this"   
+       },
+       {name:"Tuan",
+        state:"CA",
+        salary:"",
+        grade:"80",
+        room:"-1",
+        telnum:"",
+        pic:"",
+        keyword:"Tuan is gone"   
+       },
+       {name:"Tavo",
+        state:"CA",
+        salary:"220200",
+        grade:"",
+        room:"",
+        telnum:"",
+        pic:"https://maaiyedun.blob.core.windows.net/assignment1/tavo.jpg?sp=r&st=2024-06-06T19:16:20Z&se=2024-06-07T03:16:20Z&spr=https&sv=2022-11-02&sr=b&sig=ystPvxPyHPxAkKF8M0GEdgrQVCn7HNQIs0Z96vGZUvY%3D",
+        keyword:"Tavo works very hard"   
+       },
+       {name:"Nora",
+        state:"TX",
+        salary:"-1",
+        grade:"80",
+        room:"520",
+        telnum:"808",
+        pic:"",
+        keyword:""   
+       },
+
+       {name:"Sue",
+        state:"NN",
+        salary:"",
+        grade:"79",
+        room:"0",
+        telnum:"2723785",
+        pic:"https://maaiyedun.blob.core.windows.net/assignment1/upset.jpg?sp=r&st=2024-06-06T19:12:52Z&se=2024-06-07T03:12:52Z&spr=https&sv=2022-11-02&sr=b&sig=6lvITGnVAG6mFrgreIHxfPYcHMf9Q6HGK0UbvbVAbSc%3D",
+        keyword:"Sue isn't Susan"   
+       },
+       {name:"Susan",
+        state:"OK",
+        salary:"255000",
+        grade:"84",
+        room:"101",
+        telnum:"911",
+        pic:"",
+        keyword:"Susan is very smart"   
+       },
+       {name:"Darwin",
+        state:"TN",
+        salary:"25",
+        grade:"100",
+        room:"",
+        telnum:"1009",
+        pic:"https://maaiyedun.blob.core.windows.net/assignment1/dar.jpg?sp=r&st=2024-06-06T19:07:58Z&se=2024-06-07T03:07:58Z&spr=https&sv=2022-11-02&sr=b&sig=uFr%2F1gfSTSysNAKdNhiixEcm4R9%2B%2FgG1gql4W4A34UI%3D",
+        keyword:"Darwin is very creative"   
+       },
+       {name:"Sriya",
+        state:"TX",
+        salary:"111001",
+        grade:"100",
+        room:"221",
+        telnum:"",
+        pic:"",
+        keyword:"Sriya is great"   
+       }
+];
+
 const data = [
     { name: "ann", 
       room: "19", 
@@ -78,10 +182,21 @@ const data = [
             displayResult(result);
         }
         
+        function lookupName(){
+            const room = document.getElementById("name").value;
+            const result = peopledata.filter(person => person.name === nme);
+            displayResult(result);
+        }
+
+        function lookupSalary(){
+            const room = document.getElementById("salary").value;
+            const result = data.filter(person => person.salary === salary);
+            displayAss1Result(result);
+        }
         function lookupTeln() {
             const teln = document.getElementById("teln").value;
             const result = data.filter(person => person.teln === teln);
-            displayResult(result);
+            displayAss1Result(result);
         }
         
         function updateDescription() {
@@ -117,6 +232,30 @@ const data = [
             }
         }
 
+
+        function displayAss1Result(result) {
+            const resultDiv = document.getElementById("result");
+            resultDiv.innerHTML = "";
+            if (result.length === 0) {
+                resultDiv.innerText = "No matching information found.";
+            } else {
+                result.forEach(person => {
+                    const personDiv = document.createElement("div");
+                    personDiv.classList.add("person");
+                    personDiv.innerHTML = `
+                        <h2>${person.name}</h2>
+                        <p>State: ${person.state}</p>
+                        <p>Salary: ${person.salary}</p>
+                        <p>Grade: ${person.grade}</p>
+                        <p>Room: ${person.room}</p>
+                        <p>Telephone: ${person.telnum}</p>
+                        <p>Description: ${person.keyword}</p>
+                        ${person.pic ? `<img src="${person.pic}" alt="${person.name}'s picture">` : ""}
+                    `;
+                    resultDiv.appendChild(personDiv);
+                });
+            }
+        }
 
 
 

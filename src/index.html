@@ -17,11 +17,11 @@
          
   </style>
 
-<script>
-  function showinput(id){
-    var inputBar = document.getElementById(id);
+// <script>
+/* function showinput(id){
+//    var inputBar = document.getElementById(id);
     inputBar.style.display = 'block'; //shows its
-  }
+  }*/
 </script>
 
 </head>
@@ -34,13 +34,15 @@
     <div>
       <label for="room">Enter Room Number to search for:</label>
       <input type="text" id="room" name="room">
-      <button onclick="lookupRoom()">Lookup</button>
+      <button onclick="lookupRoom()">Search</button>
   </div>
+
   <div>
       <label for="teln">Enter Telephone Number to search for:</label>
       <input type="text" id="teln" name="teln">
-      <button onclick="lookupTeln()">Lookup</button>
+      <button onclick="lookupTeln()">Search</button>
   </div>
+
   <div>
       <label for="telnUpdate">Enter Telephone Number to Update:</label>
       <input type="text" id="telnUpdate" name="telnUpdate">
@@ -50,23 +52,24 @@
   </div>
   <div class="result" id="result"></div>
 
-  <script src="script.js"></script>
+  
 
 
 
     <h2>CSE Assignemnt 1, Quiz 0</h2>
     <h3>People DataSheet</h3>
-    <button onclick="showInputBar('inputBar1')">search by Name</button>
-    <div id="inputBar1" class="inputBar">
-        <input type="text" id="input1" placeholder="Enter a name...">
-    </div>
     
-    <button onclick="showInputBar('inputBar2')">search by Salary</button>
-    <div id="inputBar2" class="inputBar">
-        <input type="text" id="input2" placeholder="Enter a salary...">
+    <div>
+      <label for="namesearch">Enter a Name to search:</label>
+      <input type="text" id="names" name="names">
+      <button onclick="lookupName()">Search</button>
+    </div>   
 
-
+    <div> 
+      <label for="namesearch">Enter a Salary to search:</label>
+      <input type="text" id="salarys" name="salarys">
     </div>
+    <script src="script.js"></script>
   </main>
 </body>
 
