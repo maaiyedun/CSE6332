@@ -234,7 +234,7 @@ const data = [
 
 
         function displayAss1Result(result) {
-            const resultDiv = document.getElementById("result");
+            const resultDiv = document.getElementById("resultass1");
             resultDiv.innerHTML = "";
             if (result.length === 0) {
                 resultDiv.innerText = "No matching information found.";
@@ -243,7 +243,7 @@ const data = [
                     const personDiv = document.createElement("div");
                     personDiv.classList.add("person");
                     personDiv.innerHTML = `
-                        <h2>${person.name}</h2>
+                        <h3>${person.name}</h3>
                         <p>State: ${person.state}</p>
                         <p>Salary: ${person.salary}</p>
                         <p>Grade: ${person.grade}</p>
