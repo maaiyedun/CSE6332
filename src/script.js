@@ -1,3 +1,77 @@
+const quiz1data=[
+    {
+        name:"apple",
+        cost:"19",
+        pic:"https://maaiyedun.blob.core.windows.net/assignment1/apple.jpg?sp=r&st=2024-06-06T20:43:42Z&se=2024-06-07T04:43:42Z&spr=https&sv=2022-11-02&sr=b&sig=VgTwS%2Fp51Feb%2Fc9y%2FgX5j4%2FF9yL0tyWsLr9Zwaj1Mss%3D",
+        descript:"apples are good"
+
+    },
+    {
+        name:"berry",
+        cost:"20",
+        pic:"",
+        descript:"berries are great"
+
+    },
+    {
+        name:"carl,,",
+        cost:"",
+        pic:"https://maaiyedun.blob.core.windows.net/assignment1/carl.jpg?sp=r&st=2024-06-06T20:44:32Z&se=2024-06-07T04:44:32Z&spr=https&sv=2022-11-02&sr=b&sig=voTKxlMz%2B9bi6xFIo5wrVCSVTqXKhuKATwM%2F2YKb3sk%3D",
+        descript:"carl is also a cat"
+
+    },
+    {
+        name:"dave",
+        cost:"0",
+        pic:"https://maaiyedun.blob.core.windows.net/assignment1/dave2.jpg?sp=r&st=2024-06-06T20:53:07Z&se=2024-06-07T04:53:07Z&spr=https&sv=2022-11-02&sr=b&sig=PAIf0qzRTKKRgRhmPSQh%2FjkMGO9whoh8kkd6qwaqoOo%3D",
+        descript:"who is Dave"
+
+    },
+    {
+        name:"eve",
+        cost:"95",
+        pic:"",
+        descript:"eve is a computer"
+
+    },
+    {
+        name:"fig",
+        cost:"42",
+        pic:"",
+        descript:"figs are cheap"
+
+    }
+    ,    {
+        name:"grape",
+        cost:"",
+        pic:"",
+        descript:"grapes red or green"
+
+    }
+    ,    {
+        name:"helya",
+        cost:"1000",
+        pic:"",
+        descript:"helya is very smart"
+
+    }
+    ,    {
+        name:"imtiaz",
+        cost:"600",
+        pic:"",
+        descript:""
+
+    }
+    ,    {
+        name:"sinong",
+        cost:"999",
+        pic:"https://maaiyedun.blob.core.windows.net/assignment1/sinong.jpg?sp=r&st=2024-06-06T20:46:39Z&se=2024-06-07T04:46:39Z&spr=https&sv=2022-11-02&sr=b&sig=a1fBXdcYngzP1mBRkNAtsmyclYXOBpqMUGS1kdVv0E8%3D",
+        descript:"sinong is also very smart"
+
+    }
+];
+
+
 const peopledata = [
     {name:"Dhruvi",
      state:"TX",
@@ -181,7 +255,14 @@ const data = [
             const result = data.filter(person => person.room === room);
             displayResult(result);
         }
-        
+       
+        function searchNameQ1(){
+            const name = document.getElementById("name").value;
+            const result = quiz1data.filter(item => item.name === name);
+            displayQ1Result(result);
+        }        
+
+
         function lookupName(){
             const name = document.getElementById("name").value;
             const result = peopledata.filter(person => person.name === name);
@@ -257,5 +338,24 @@ const data = [
             }
         }
 
+        function displayQ1Result(result) {
+            const resultDiv = document.getElementById("resultquiz1");
+            resultDiv.innerHTML = "";
+            if (result.length === 0) {
+                resultDiv.innerText = "No matching information found.";
+            } else {
+                result.forEach(item => {
+                    const itemDiv = document.createElement("div");
+                    itemDiv.classList.add("item");
+                    itemDiv.innerHTML = `
+                        <h3>${item.name}</h3>
+                        <p>Cost: ${item.cost}</p>
+                        <p>Description: ${item.descript}</p>
+                        ${item.pic ? `<img src="${item.pic}" alt="${item.name}'s picture">` : ""}
+                    `;
+                    resultDiv.appendChild(itemDiv);
+                });
+            }
+        }
 
 

@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
-  <title>CSE Assignemnt 1</title>
+  <title>CSE Quiz 1</title>
   <style>
     .inputBar{
       display: none; /*hidden*/
@@ -15,6 +15,7 @@
     body { font-family: Arial, sans-serif; }
     .result { margin-top: 20px; }
     .resultass1 {margin-top: 20px;}
+    .resultquiz1{margin-top: 20px;}
          
   </style>
 
@@ -30,12 +31,22 @@
 <body>
   <main>
     <h1>Michael Aiyedun 345849</h1>
-    <img src="https://maaiyedun.blob.core.windows.net/assignment1/dan.jpg?sp=r&st=2024-06-06T16:17:20Z&se=2024-06-07T00:17:20Z&spr=https&sv=2022-11-02&sr=b&sig=9IprLSgB3KGdf4D9LhwzEHGQycFIEyc9f%2BTvK2SsVEc%3D" alt="literallyme">
-
+    <img src="https://maaiyedun.blob.core.windows.net/assignment1/sinong.jpg?sp=r&st=2024-06-06T20:46:39Z&se=2024-06-07T04:46:39Z&spr=https&sv=2022-11-02&sr=b&sig=a1fBXdcYngzP1mBRkNAtsmyclYXOBpqMUGS1kdVv0E8%3D" alt="literallyme">
+    <h5>Quiz 1</h5>
     <div>
+      
       <label for="room">Enter Room Number to search for:</label>
       <input type="text" id="room" name="room">
       <button onclick="lookupRoom()">Search</button>
+  </div>
+
+  <div class="resultquiz1" id="resultquiz1"></div>
+    
+    <div>
+      <h4>Quiz 0</h4>
+      <label for="namesearch">Enter a Name to search:</label>
+      <input type="text" id="name" name="name">
+      <button onclick="searchNameQ1()">Search</button>
   </div>
 
   <div>
