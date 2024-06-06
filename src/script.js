@@ -185,7 +185,7 @@ const data = [
         function lookupName(){
             const room = document.getElementById("name").value;
             const result = peopledata.filter(person => person.name === nme);
-            displayResult(result);
+            displayAss1Result(result);
         }
 
         function lookupSalary(){
@@ -196,7 +196,7 @@ const data = [
         function lookupTeln() {
             const teln = document.getElementById("teln").value;
             const result = data.filter(person => person.teln === teln);
-            displayAss1Result(result);
+            displayResult(result);
         }
         
         function updateDescription() {
