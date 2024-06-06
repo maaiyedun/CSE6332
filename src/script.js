@@ -184,13 +184,13 @@ const data = [
         
         function lookupName(){
             const room = document.getElementById("name").value;
-            const result = peopledata.filter(person => person.name === nme);
+            const result = peopledata.filter(person => person.name === name);
             displayAss1Result(result);
         }
 
         function lookupSalary(){
             const room = document.getElementById("salary").value;
-            const result = data.filter(person => person.salary === salary);
+            const result = peopledata.filter(person => person.salary === salary);
             displayAss1Result(result);
         }
         function lookupTeln() {
