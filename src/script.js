@@ -338,11 +338,29 @@ const data = [
             }
         }
 
+
+        function updatedescriptQ1() {
+            const name = document.getElementById("nameupdate").value;
+            const nname = document.getElementById("nname").value;
+            const ndescript = document.getElementById("ndescript").value;
+            const item = data.find(item => item.name === name);
+            if (item) {
+                item.name = nname;
+                item.descript = ndescript;
+                displayQ1Result([item]);
+            } else {
+                document.getElementById("resultquiz1").innerText = "No person found with the given name, please try again.";
+            }
+        }
+
+
+
+
         function displayQ1Result(result) {
             const resultDiv = document.getElementById("resultquiz1");
             resultDiv.innerHTML = "";
             if (result.length === 0) {
-                resultDiv.innerText = "No matching information found.";
+                resultDiv.innerText = "Error: No matching data found, please try again.";
             } else {
                 result.forEach(item => {
                     const itemDiv = document.createElement("div");
