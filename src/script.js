@@ -414,13 +414,7 @@ const data = [
 
 
 
-        function getdata(){
-            try{
-        const response = await fetch('q1x.csv');
-        const data = await response.text();
-        return csvToJSON(data);
-            }
-        }
+
 
         function updatedescriptQ1() {
             const name = document.getElementById("nameupdate").value;
