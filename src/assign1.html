@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>Assignment 1</title>
+  <style>
+    .inputBar{
+      display: none; /*hidden*/
+      margin-top: 10px;
+    }
+
+    body { font-family: Arial, sans-serif; }
+    .resultass1 {margin-top: 20px;}
+         
+  </style>
+
+</head>
+
+<body>
+    <main>
+
+        <h2>CSE Assignemnt 1</h2>
+        <h3>People DataSheet</h3>
+        
+        <div>
+          <label for="namesearch">Enter a Name to search:</label>
+          <input type="text" id="name" name="name">
+          <button onclick="lookupName()">Search</button>
+        </div>   
+    
+        <div> 
+          <label for="namesearch">Enter a Salary to search:</label>
+          <input type="text" id="salary" name="salary">
+          <button onclick="lookupSalary()">Search</button>
+        </div>
+        <div class="resultass1" id="resultass1"></div>
+        <script src="script.js"></script>
+    </main>
+</body>
+</html>

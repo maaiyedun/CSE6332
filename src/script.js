@@ -71,6 +71,8 @@ const quiz1data=[
     }
 ];
 
+var q1data =$.csv.toObjects("https://maaiyedun.blob.core.windows.net/assignment1/q1x.csv?sp=r&st=2024-06-06T21:57:40Z&se=2024-06-07T05:57:40Z&spr=https&sv=2022-11-02&sr=b&sig=kTpCB2YLnrS%2FA9IHgTAykMeFzZAvIAM%2Fj0Do%2BeHQ42c%3D");
+
 const quiz1data2=[
     {
         name:"apple",
@@ -411,14 +413,34 @@ const data = [
         }
 
 
+
+        function getdata(){
+            try{
+        const response = await fetch('q1x.csv');
+        const data = await response.text();
+        return csvToJSON(data);
+            }
+        }
+
         function updatedescriptQ1() {
             const name = document.getElementById("nameupdate").value;
             const nname = document.getElementById("nname").value;
             const ndescript = document.getElementById("ndescript").value;
-            const item = quiz1data.find(item => item.name === name);
+            const item = q1data.find(item => item.name === name);
             if (item) {
+                q1data.find(lok => lok.name === name) = nname;
+                q1data.find(lok => lok.descript === item.descript) = ndescript;
+                
                 item.name = nname;
                 item.descript = ndescript;
+
+                let csvContent = "data:text/csv;charset=utf-8," 
+                var encodedUri = encodeURI(csvContent);
+                var link = document.createElement("a");
+                link.setAttribute("href", encodedUri);
+                link.setAttribute("download", "my_data.csv");
+                document.body.appendChild(link);
+
                 displayQ1Result([item]);
             } else {
                 document.getElementById("resultquiz1").innerText = "No person found with the given name, please try again.";
@@ -429,6 +451,10 @@ const data = [
             quiz1data === quiz1data2; 
         }
 
+        function  fileread (){
+            fetch("https://maaiyedun.blob.core.windows.net/assignment1/q1x.csv?sp=r&st=2024-06-06T21:57:40Z&se=2024-06-07T05:57:40Z&spr=https&sv=2022-11-02&sr=b&sig=kTpCB2YLnrS%2FA9IHgTAykMeFzZAvIAM%2Fj0Do%2BeHQ42c%3D");
+
+        }
 
 
         function displayQ1Result(result) {

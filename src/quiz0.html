@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>Quiz 0</title>
+  <style>
+    .inputBar{
+      display: none; /*hidden*/
+      margin-top: 10px;
+    }
+
+    body { font-family: Arial, sans-serif; }
+    .result { margin-top: 20px; }
+         
+  </style>
+
+</head>
+
+<body>
+    <main>
+
+
+        <div>
+            <h4>Quiz 0</h4>
+            <label for="room">Enter Room Number to search for:</label>
+            <input type="text" id="room" name="room">
+            <button onclick="lookupRoom()">Search</button>
+        </div>
+      
+        <div>
+            <label for="teln">Enter Telephone Number to search for:</label>
+            <input type="text" id="teln" name="teln">
+            <button onclick="lookupTeln()">Search</button>
+        </div>
+      
+        <div>
+            <label for="telnUpdate">Enter Telephone Number to Update:</label>
+            <input type="text" id="telnUpdate" name="telnUpdate">
+            <label for="newDescript">New Description:</label>
+            <input type="text" id="newDescript" name="newDescript">
+            <button onclick="updateDescription()">Update</button>
+        </div>
+        <div class="result" id="result"></div>
+
+
+        <script src="script.js"></script>
+    </main>
+</body>
+</html>

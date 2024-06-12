@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>Quiz 1</title>
+  <style>
+    .inputBar{
+      display: none; /*hidden*/
+      margin-top: 10px;
+    }
+
+    body { font-family: Arial, sans-serif; }
+    .resultquiz1{margin-top: 20px;}
+         
+  </style>
+
+</head>
+
+<body>
+    <main>
+
+        <h5>Quiz 1</h5>
+        <div>
+          <button onclick="getdata()">datacheck</button>
+          <label for="namesearch">Enter a Name to search:</label>
+          <input type="text" id="name" name="name">
+          <button onclick="searchNameQ1()">Search</button>
+    
+      </div>
+    
+      <div>
+        <label for="lsalary">Enter the minimum salary:</label>
+        <input type="text" id="lsalary" name="lsalary">
+        <label for="hsalary">Enter the maximum salary:</label>
+        <input type="text" id="hsalary" name="hsalary">
+        <button onclick="salrayrange()">Search for range</button>
+      </div>
+    
+    
+      <div>
+        <label for="nameupdate">Enter a Name you want to Update:</label>
+        <input type="text" id="nameupdate" name="nameupdate">
+        <label for="nname">New Name:</label>
+        <input type="text" id="nname" name="nname">
+        <label for="ndescript">New Description:</label>
+        <input type="text" id="ndescript" name="ndescript">
+        <button onclick="updatedescriptQ1()">Update</button>
+      </div>
+    
+      <div><button onclick="datareset()">reset</button></div>
+    
+    
+      <div class="resultquiz1" id="resultquiz1"></div>
+
+      <script src="script.js"></script>
+    </main>
+</body>
+</html>
