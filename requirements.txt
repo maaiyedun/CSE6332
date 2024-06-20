@@ -1,5 +1,8 @@
-Flask==2.2.2
-gunicorn
-Werkzeug==2.2.2
+Flask
 pandas
-pymysql
+SQLAlchemy
+redis
+geopy
+matplotlib
+basemap
+pyodbc

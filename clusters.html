@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Earthquake Clusters</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Earthquake Clusters</h1>
+        {% for cluster in clusters %}
+        <div class="cluster">
+            <h2>Cluster</h2>
+            <ul>
+                {% for quake in cluster %}
+                <li>{{ quake['Datetime'] }}: {{ quake['Magnitude'] }} - {{ quake['Place'] }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
