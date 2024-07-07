@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Earthquake Data API</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Earthquake Data API</h1>
+    
+    <!-- CSV Upload -->
+    <div class="section">
+        <h2>Upload CSV</h2>
+        <form id="upload-form">
+            <input type="file" id="csv-file" name="file" accept=".csv">
+            <button type="submit">Upload</button>
+        </form>
+        <div id="upload-result"></div>
+    </div>
+    
+    <!-- Query by Time Range -->
+    <div class="section">
+        <h2>Query by Time Range</h2>
+        <form id="range-query-form">
+            <label for="start-time">Start Time:</label>
+            <input type="number" id="start-time" name="start_time" required>
+            <label for="end-time">End Time:</label>
+            <input type="number" id="end-time" name="end_time" required>
+            <button type="submit">Query</button>
+        </form>
+        <div id="range-query-result"></div>
+    </div>
+    
+    <!-- Query by Time and Net -->
+    <div class="section">
+        <h2>Query by Time and Net</h2>
+        <form id="time-net-query-form">
+            <label for="time">Time:</label>
+            <input type="number" id="time" name="time" required>
+            <label for="net">Net:</label>
+            <input type="text" id="net" name="net" required>
+            <label for="count">Count:</label>
+            <input type="number" id="count" name="count" required>
+            <button type="submit">Query</button>
+        </form>
+        <div id="time-net-query-result"></div>
+    </div>
+    
+    <!-- Repeat Queries -->
+    <div class="section">
+        <h2>Repeat Queries</h2>
+        <form id="repeat-queries-form">
+            <label for="repeat-count">Number of Times (T):</label>
+            <input type="number" id="repeat-count" name="T" required>
+            <label for="start-time-rep">Start Time:</label>
+            <input type="number" id="start-time-rep" name="start_time" required>
+            <label for="end-time-rep">End Time:</label>
+            <input type="number" id="end-time-rep" name="end_time" required>
+            <label for="time-rep">Time:</label>
+            <input type="number" id="time-rep" name="time" required>
+            <label for="net-rep">Net:</label>
+            <input type="text" id="net-rep" name="net" required>
+            <label for="count-rep">Count:</label>
+            <input type="number" id="count-rep" name="count" required>
+            <button type="submit">Repeat Queries</button>
+        </form>
+        <div id="repeat-queries-result"></div>
+    </div>
+    
+    <!-- Update Record -->
+    <div class="section">
+        <h2>Update Record</h2>
+        <form id="update-form">
+            <label for="update-time">Time:</label>
+            <input type="number" id="update-time" name="time" required>
+            <label for="update-values">New Values (JSON format):</label>
+            <textarea id="update-values" name="new_values" required></textarea>
+            <button type="submit">Update</button>
+        </form>
+        <div id="update-result"></div>
+    </div>
+    
+    <!-- Repeat Queries with Cache -->
+    <div class="section">
+        <h2>Repeat Queries with Cache</h2>
+        <form id="repeat-queries-cache-form">
+            <label for="repeat-count-cache">Number of Times (T):</label>
+            <input type="number" id="repeat-count-cache" name="T" required>
+            <label for="start-time-cache">Start Time:</label>
+            <input type="number" id="start-time-cache" name="start_time" required>
+            <label for="end-time-cache">End Time:</label>
+            <input type="number" id="end-time-cache" name="end_time" required>
+            <label for="time-cache">Time:</label>
+            <input type="number" id="time-cache" name="time" required>
+            <label for="net-cache">Net:</label>
+            <input type="text" id="net-cache" name="net" required>
+            <label for="count-cache">Count:</label>
+            <input type="number" id="count-cache" name="count" required>
+            <button type="submit">Repeat Queries with Cache</button>
+        </form>
+        <div id="repeat-queries-cache-result"></div>
+    </div>
+    
+    <script src="scripts.js"></script>
+</body>
+</html>

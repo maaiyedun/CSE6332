@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Earthquake Data Visualization</title>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+</head>
+<body>
+    <h1>Earthquake Data Visualization</h1>
+    <form id="searchForm">
+        <label for="mag_gt">Magnitude Greater Than:</label>
+        <input type="number" id="mag_gt" name="mag_gt" step="0.1" value="5.0"><br><br>
+        
+        <label for="start_date">Start Date:</label>
+        <input type="date" id="start_date" name="start_date"><br><br>
+        
+        <label for="end_date">End Date:</label>
+        <input type="date" id="end_date" name="end_date"><br><br>
+        
+        <label for="lat">Latitude:</label>
+        <input type="number" id="lat" name="lat" step="0.01"><br><br>
+        
+        <label for="lon">Longitude:</label>
+        <input type="number" id="lon" name="lon" step="0.01"><br><br>
+        
+        <label for="radius_km">Radius (km):</label>
+        <input type="number" id="radius_km" name="radius_km" step="1"><br><br>
+        
+        <label for="chart_type">Chart Type:</label>
+        <select id="chart_type" name="chart_type">
+            <option value="bar">Bar Chart</option>
+            <option value="pie">Pie Chart</option>
+            <option value="scatter">Scatter Plot</option>
+        </select><br><br>
+        
+        <button type="submit">Search</button>
+    </form>
+
+    <div id="chart"></div>
+
+    <script>
+        document.getElementById('searchForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const params = new URLSearchParams(formData).toString();
+
+            fetch('/search?' + params)
+                .then(response => response.json())
+                .then(data => {
+                    const chartType = formData.get('chart_type');
+                    displayChart(data, chartType);
+                });
+        });
+
+        function displayChart(data, chartType) {
+            d3.select("#chart").html("");
+
+            if (chartType === "bar") {
+                // Bar chart implementation
+                const margin = { top: 20, right: 30, bottom: 40, left: 40 },
+                    width = 800 - margin.left - margin.right,
+                    height = 400 - margin.top - margin.bottom;
+
+                const svg = d3.select("#chart")
+                    .append("svg")
+                    .attr("width", width + margin.left + margin.right)
+                    .attr("height", height + margin.top + margin.bottom)
+                    .append("g")
+                    .attr("transform", `translate(${margin.left},${margin.top})`);
+
+                const x = d3.scaleBand()
+                    .domain(data.map(d => d.id))
+                    .range([0, width])
+                    .padding(0.1);
+
+                const y = d3.scaleLinear()
+                    .domain([0, d3.max(data, d => d.mag)])
+                    .nice()
+                    .range([height, 0]);
+
+                svg.append("g")
+                    .selectAll(".bar")
+                    .data(data)
+                    .enter()
+                    .append("rect")
+                    .attr("class", "bar")
+                    .attr("x", d => x(d.id))
+                    .attr("y", d => y(d.mag))
+                    .attr("width", x.bandwidth())
+                    .attr("height", d => height - y(d.mag));
+
+                svg.append("g")
+                    .attr("class", "x-axis")
+                    .attr("transform", `translate(0,${height})`)
+                    .call(d3.axisBottom(x));
+
+                svg.append("g")
+                    .attr("class", "y-axis")
+                    .call(d3.axisLeft(y));
+            } else if (chartType === "pie") {
+                // Pie chart implementation
+                const width = 450,
+                    height = 450,
+                    radius = Math.min(width, height) / 2;
+
+                const svg = d3.select("#chart")
+                    .append("svg")
+                    .attr("width", width)
+                    .attr("height", height)
+                    .append("g")
+                    .attr("transform", `translate(${width / 2},${height / 2})`);
+
+                const pie = d3.pie()
+                    .value(d => d.mag)
+                    .sort(null);
+
+                const arc = d3.arc()
+                    .innerRadius(0)
+                    .outerRadius(radius);
+
+                const color = d3.scaleOrdinal()
+                    .domain(data.map(d => d.id))
+                    .range(d3.schemeCategory10);
+
+                const arcs = svg.selectAll(".arc")
+                    .data(pie(data))
+                    .enter()
+                    .append("g")
+                    .attr("class", "arc");
+
+                arcs.append("path")
+                    .attr("d", arc)
+                    .attr("fill", d => color(d.data.id));
+            } else if (chartType === "scatter") {
+                // Scatter plot implementation
+                const margin = { top: 20, right: 30, bottom: 40, left: 40 },
+                    width = 800 - margin.left - margin.right,
+                    height = 400 - margin.top - margin.bottom;
+
+                const svg = d3.select("#chart")
+                    .append("svg")
+                    .attr("width", width + margin.left + margin.right)
+                    .attr("height", height + margin.top + margin.bottom)
+                    .append("g")
+                    .attr("transform", `translate(${margin.left},${margin.top})`);
+
+                const x = d3.scaleLinear()
+                    .domain(d3.extent(data, d => d.longitude))
+                    .nice()
+                    .range([0, width]);
+
+                const y = d3.scaleLinear()
+                    .domain(d3.extent(data, d => d.latitude))
+                    .nice()
+                    .range([height, 0]);
+
+                svg.append("g")
+                    .selectAll("circle")
+                    .data(data)
+                    .enter()
+                    .append("circle")
+                    .attr("cx", d => x(d.longitude))
+                    .attr("cy", d => y(d.latitude))
+                    .attr("r", 5);
+
+                svg.append("g")
+                    .attr("class", "x-axis")
+                    .attr("transform", `translate(0,${height})`)
+                    .call(d3.axisBottom(x));
+
+                svg.append("g")
+                    .attr("class", "y-axis")
+                    .call(d3.axisLeft(y));
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text File Upload</title>
+</head>
+<body>
+    <h1>Upload a Text File</h1>
+    <form id="uploadForm" enctype="multipart/form-data">
+        <input type="file" id="fileInput" name="file" accept=".txt">
+        <button type="button" onclick="uploadFile()">Upload</button>
+    </form>
+    <h2>Results</h2>
+    <div id="results"></div>
+
+    <script>
+        function uploadFile() {
+            var formData = new FormData(document.getElementById('uploadForm'));
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    document.getElementById('results').innerText = data.error;
+                } else {
+                    var resultsDiv = document.getElementById('results');
+                    resultsDiv.innerHTML = `<p>Word Count: ${data.word_count}</p>`;
+                    resultsDiv.innerHTML += `<p>Letter Frequency:</p>`;
+                    resultsDiv.innerHTML += `<ul>`;
+                    for (const [letter, freq] of Object.entries(data.letter_frequency)) {
+                        resultsDiv.innerHTML += `<li>${letter}: ${freq}</li>`;
+                    }
+                    resultsDiv.innerHTML += `</ul>`;
+                    resultsDiv.innerHTML += `<p>Bigram Frequency:</p>`;
+                    resultsDiv.innerHTML += `<ul>`;
+                    for (const [bigram, freq] of Object.entries(data.bigram_frequency)) {
+                        resultsDiv.innerHTML += `<li>${bigram}: ${freq}</li>`;
+                    }
+                    resultsDiv.innerHTML += `</ul>`;
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>

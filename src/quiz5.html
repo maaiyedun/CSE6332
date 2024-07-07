@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Food Data Management</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        .chart {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Food Data Management</h1>
+    
+    <div>
+        <h2>Manage Food Entries</h2>
+        <input type="text" id="food-name" placeholder="Food Name">
+        <input type="number" id="food-quantity" placeholder="Quantity">
+        <input type="number" id="food-price" placeholder="Price">
+        <button onclick="addFood()">Add Food</button>
+        <button onclick="updateFood()">Update Food</button>
+        <button onclick="removeFood()">Remove Food</button>
+        <div id="food-table"></div>
+    </div>
+    
+    <div>
+        <h2>Pie chart results</h2>
+        <input type="number" id="pie-slices" placeholder="Pie chart with N slices">
+        <button onclick="drawPieChart()">Draw Pie Chart</button>
+        <div id="pie-chart" class="chart"></div>
+    </div>
+    
+    <div>
+        <h2>Horizontal Bar Chart</h2>
+        <input type="number" id="bar-count" placeholder="Horizontal bar chart with M bars">
+        <button onclick="drawBarChart()">Draw Bar Chart</button>
+        <div id="bar-chart" class="chart"></div>
+    </div>
+    
+    <div>
+        <h2>Scatter Point Chart</h2>
+        <input type="number" id="xpos" placeholder="xpos">
+        <input type="number" id="ypos" placeholder="ypos">
+        <input type="number" id="pointquantity" placeholder="pointQuantity">
+        <button onclick="addPoint()">Add point</button>
+
+        <button onclick="drawScatterPlot()">Draw Scatter Plot</button>
+        <div id="scatter-plot" class="chart"></div>
+    </div>
+
+    <script>
+        function fetchFoodData() {
+            fetch('/points')
+                .then(response => response.json())
+                .then(data => updateFoodTable(data));
+        }
+
+
+
+        function updateFoodTable(data) {
+            let table = '<table border="1"><tr><th>Food</th><th>Quantity</th><th>Price</th></tr>';
+            data.forEach(row => {
+                table += `<tr><td>${row.food}</td><td>${row.quantity}</td><td>${row.price}</td></tr>`;
+            });
+            table += '</table>';
+            document.getElementById('food-table').innerHTML = table;
+        }
+
+        function addFood() {
+            const food = document.getElementById('food-name').value;
+            const quantity = document.getElementById('food-quantity').value;
+            const price = document.getElementById('food-price').value;
+            fetch('/food', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ food, quantity, price })
+            }).then(() => fetchFoodData());
+        }
+
+
+        function addPoint() {
+            const xpos = document.getElementById('x position').value;
+            const ypos = document.getElementById('y position').value;
+            const quantity = document.getElementById('quantity').value;
+            fetch('/points', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ xpos, ypos, quantity })
+            });
+        }
+
+        function updateFood() {
+            const food = document.getElementById('food-name').value;
+            const quantity = document.getElementById('food-quantity').value;
+            const price = document.getElementById('food-price').value;
+            fetch('/food', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ food, quantity, price })
+            }).then(() => fetchFoodData());
+        }
+
+        function removeFood() {
+            const food = document.getElementById('food-name').value;
+            fetch('/food', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ food })
+            }).then(() => fetchFoodData());
+        }
+
+        function drawPieChart() {
+            const slices = document.getElementById('pie-slices').value;
+            fetch('/food')
+                .then(response => response.json())
+                .then(data => {
+                    data.sort((a, b) => b.quantity - a.quantity);
+                    data = data.slice(0, slices);
+
+                    const width = 400, height = 400, radius = Math.min(width, height) / 2;
+                    const color = d3.scaleOrdinal(d3.schemeCategory10);
+                    const arc = d3.arc().innerRadius(0).outerRadius(radius);
+                    const pie = d3.pie().value(d => d.quantity);
+
+                    d3.select("#pie-chart").html('');
+                    const svg = d3.select("#pie-chart")
+                                  .append("svg")
+                                  .attr("width", width)
+                                  .attr("height", height)
+                                  .append("g")
+                                  .attr("transform", `translate(${width / 2}, ${height / 2})`);
+
+                    const arcs = svg.selectAll("arc")
+                                    .data(pie(data))
+                                    .enter()
+                                    .append("g")
+                                    .attr("class", "arc");
+
+                    arcs.append("path")
+                        .attr("d", arc)
+                        .attr("fill", d => color(d.data.food));
+
+                    arcs.append("text")
+                        .attr("transform", d => `translate(${arc.centroid(d)})`)
+                        .attr("dy", "0.35em")
+                        .text(d => `${d.data.food}: ${d.data.quantity}`);
+                });
+        }
+
+        function drawBarChart() {
+            const bars = document.getElementById('bar-count').value;
+            fetch('/food')
+                .then(response => response.json())
+                .then(data => {
+                    data.sort((a, b) => b.price - a.price);
+                    data = data.slice(0, bars);
+
+                    const margin = {top: 20, right: 30, bottom: 40, left: 90},
+                          width = 500 - margin.left - margin.right,
+                          height = 300 - margin.top - margin.bottom;
+
+                    const x = d3.scaleLinear().range([0, width]).domain([0, d3.max(data, d => d.price)]);
+                    const y = d3.scaleBand().range([height, 0]).domain(data.map(d => d.food)).padding(0.1);
+
+                    d3.select("#bar-chart").html('');
+                    const svg = d3.select("#bar-chart")
+                                  .append("svg")
+                                  .attr("width", width + margin.left + margin.right)
+                                  .attr("height", height + margin.top + margin.bottom)
+                                  .append("g")
+                                  .attr("transform", `translate(${margin.left}, ${margin.top})`);
+
+                    svg.selectAll(".bar")
+                       .data(data)
+                       .enter()
+                       .append("rect")
+                       .attr("class", "bar")
+                       .attr("width", d => x(d.price))
+                       .attr("y", d => y(d.food))
+                       .attr("height", y.bandwidth())
+                       .attr("fill", "blue");
+
+                    svg.selectAll(".text")
+                       .data(data)
+                       .enter()
+                       .append("text")
+                       .attr("class", "text")
+                       .attr("x", d => x(d.price) - 5)
+                       .attr("y", d => y(d.food) + y.bandwidth() / 2)
+                       .attr("dy", ".35em")
+                       .attr("text-anchor", "end")
+                       .text(d => d.price);
+
+                    svg.append("g")
+                       .attr("transform", `translate(0, ${height})`)
+                       .call(d3.axisBottom(x).ticks(5))
+                       .append("text")
+                       .attr("y", margin.bottom)
+                       .attr("x", width / 2)
+                       .attr("dy", "1.5em")
+                       .attr("text-anchor", "middle")
+                       .text("Price");
+
+                    svg.append("g")
+                       .call(d3.axisLeft(y))
+                       .append("text")
+                       .attr("transform", "rotate(-90)")
+                       .attr("y", -margin.left)
+                       .attr("x", -height / 2)
+                       .attr("dy", "-3.5em")
+                       .attr("text-anchor", "middle")
+                       .text("Food");
+                });
+        }
+
+        function drawScatterPlot() {
+            fetch('/points')
+                .then(response => response.json())
+                .then(data => {
+                    const margin = {top: 20, right: 20, bottom: 30, left: 40},
+                          width = 500 - margin.left - margin.right,
+                          height = 300 - margin.top - margin.bottom;
+
+                    const x = d3.scaleLinear().range([0, width]).domain([0, d3.max(data, d => +d.x)]);
+                    const y = d3.scaleLinear().range([height, 0]).domain([0, d3.max(data, d => +d.y)]);
+                    const color = d3.scaleThreshold().domain([100, 1000]).range(["red", "blue", "green"]);
+
+                    d3.select("#scatter-plot").html('');
+                    const svg = d3.select("#scatter-plot")
+                                  .append("svg")
+                                  .attr("width", width + margin.left + margin.right)
+                                  .attr("height", height + margin.top + margin.bottom)
+                                  .append("g")
+                                  .attr("transform", `translate(${margin.left}, ${margin.top})`);
+
+                    svg.selectAll("circle")
+                       .data(data)
+                       .enter()
+                       .append("circle")
+                       .attr("cx", d => x(d.x))
+                       .attr("cy", d => y(d.y))
+                       .attr("r", 5)
+                       .attr("fill", d => color(d.quantity));
+
+                    svg.append("g")
+                       .attr("transform", `translate(0, ${height})`)
+                       .call(d3.axisBottom(x));
+
+                    svg.append("g")
+                       .call(d3.axisLeft(y));
+                });
+        }
+
+        fetchFoodData();
+    </script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Text Processing</title>
+</head>
+<body>
+
+
+
+    <h1>Quiz 4:Text Processing</h1>
+
+    <div>
+        <form id="uploadForm" enctype="multipart/form-data">
+            <input type="file" id="fileInput" name="file" accept=".txt">
+            <button type="button" onclick="uploadFile()">Upload</button>
+        </form>
+    </div>
+
+    <form method="post">
+        <label for="string_input">String Input (Length of 1-10 characters please):</label>
+        <input type="text" id="string_input" name="string_input"><br><br>
+        <label for="char_input">Character Input(Length of 1 character please):</label>
+        <input type="text" id="char_input" name="char_input"><br><br>
+        <label for="text_input">Text Input:</label>
+        <textarea id="text_input" name="text_input"></textarea><br><br>
+        <button type="submit">Submit</button>
+    </form>
+
+    {% if letter_freqs %}
+    <h2>Results:</h2>
+    <h3>Part (10).Letter Frequencies and Text Replaced with the character "C" at inputs String "S":</h3>
+    <ul>
+        {% for char, (count, freq) in letter_freqs.items() %}
+        <li>{{ char }}: {{ count }} ({{ '{:.2%}'.format(freq) }})</li>
+        {% endfor %}
+    </ul>
+    <p>Replaced Text: {{ replaced_text }}</p>
+
+    <h3>Part (11). Words Count and Words Starting with Letters from String input "S":</h3>
+    <p>Total Words: {{ total_words }}</p>
+    <p>Character: {{ char_input }}</p>
+    <ul>
+        {% for word in words_with_string_chars %}
+        <li>{{ word }}</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Part (12). Stop word filtered Bigrams that begin with a character from String "S":</h3>
+    <ul>
+        {% for bigram in bigrams_list %}
+        <li>{{ bigram }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <script>
+        function uploadFile() {
+            var formData = new FormData(document.getElementById('uploadForm'));
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    document.getElementById('results').innerText = data.error;
+                }
+    </script>
+</body>
+</html>
